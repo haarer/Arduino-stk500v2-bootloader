@@ -112,12 +112,17 @@ LICENSE:
 #include	<stdlib.h>
 #include	"command.h"
 
+#if DISABLE_MONITOR
+#warning "MONITOR DISABLED"
+#else
 
 #if defined(_MEGA_BOARD_) || defined(_BOARD_AMBER128_) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) \
 	|| defined(__AVR_ATmega2561__) || defined(__AVR_ATmega1284P__) || defined(ENABLE_MONITOR)
 	#undef		ENABLE_MONITOR
 	#define		ENABLE_MONITOR
 	static void	RunMonitor(void);
+#endif
+#warning "MONITOR ENABLED"
 #endif
 
 #ifndef EEWE
@@ -1236,6 +1241,7 @@ unsigned long	gEepromIndex;
 	#define	kInterruptVectorCount 23
 #endif
 
+#define prog_char const char
 
 void	PrintDecInt(int theNumber, int digitCnt);
 
@@ -1295,7 +1301,7 @@ void	PrintDecInt(int theNumber, int digitCnt);
 
 
 //************************************************************************
-void	PrintFromPROGMEM(void *dataPtr, unsigned char offset)
+void	PrintFromPROGMEM(const void *dataPtr, unsigned char offset)
 {
 uint8_t	ii;
 char	theChar;
@@ -1327,7 +1333,7 @@ void	PrintNewLine(void)
 
 
 //************************************************************************
-void	PrintFromPROGMEMln(void *dataPtr, unsigned char offset)
+void	PrintFromPROGMEMln(const void *dataPtr, unsigned char offset)
 {
 	PrintFromPROGMEM(dataPtr, offset);
 
