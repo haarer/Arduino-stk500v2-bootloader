@@ -106,7 +106,11 @@ CSTANDARD = -std=gnu99
 
 
 # Place -D or -U options here
-CDEFS = -DF_CPU=$(F_CPU)UL -D DISABLE_MONITOR
+CDEFS = -DF_CPU=$(F_CPU)UL 
+
+ifeq ($(DISABLE_MONITOR), 1)
+CDEFS += -DDISABLE_MONITOR=1
+endif
 
 
 # Place -I options here
